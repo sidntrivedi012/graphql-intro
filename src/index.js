@@ -7,10 +7,23 @@ let links = [
     description: "OSDC Website"
   }
 ];
+let count = links.length;
+
 const resolvers = {
   Query: {
     info: () => `This is hackernews clone.`,
     feed: () => links
+  },
+  Mutation: {
+    post: (parent, args) => {
+      const link = {
+        id: `link - ${count++}`,
+        url: args.url,
+        description: args.description
+      };
+      links.push(link);
+      return link;
+    }
   },
   Link: {
     id: parent => parent.id,
